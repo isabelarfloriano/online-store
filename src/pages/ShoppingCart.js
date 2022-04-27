@@ -44,7 +44,6 @@ class ShoppingCart extends Component {
                 </p>
               </div>
             ))
-
           )
         }
       </div>

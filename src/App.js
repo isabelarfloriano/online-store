@@ -30,7 +30,6 @@ class App extends Component {
             path="/"
             render={ (props) => (<Home
               { ...props }
-              cartProductsIds={ cartProductsIds }
               handleClick={ this.handleClick }
             />) }
           />
@@ -44,7 +43,10 @@ class App extends Component {
           />
           <Route
             path="/productsDetails/:id"
-            render={ (props) => <ProductsDetails { ...props } /> }
+            render={ (props) => (<ProductsDetails
+              { ...props }
+              handleClick={ this.handleClick }
+            />) }
           />
         </Switch>
       </BrowserRouter>
