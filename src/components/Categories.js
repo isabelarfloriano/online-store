@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 class Categories extends Component {
   render() {
-    const { category } = this.props;
+    const { category, handleClick } = this.props;
     return (
       <button
+        id={ category.id }
         data-testid="category"
         type="button"
+        onClick={ handleClick }
       >
         {category.name}
       </button>
@@ -17,8 +19,10 @@ class Categories extends Component {
 
 Categories.propTypes = {
   category: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Categories;

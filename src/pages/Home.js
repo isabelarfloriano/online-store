@@ -1,40 +1,91 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../services/api';
+import * as api from '../services/api';
 import Categories from '../components/Categories';
+import ItemCard from '../components/ItemCard';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       categories: [],
+      categoryId: '',
+      query: '',
+      searchedList: [],
     };
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   componentDidMount() {
     this.setState(async () => {
-      const categories = await getCategories();
+      const categories = await api.getCategories();
       this.setState({
         categories: [...categories],
       });
     });
   }
 
+  onInputChange({ target }) {
+    const { value } = target;
+    this.setState({
+      query: value,
+    });
+  }
+
+  updateSearchedList = async () => {
+    const { categoryId, query } = this.state;
+    await api.getProductsFromCategoryAndQuery(categoryId, query)
+      .then((itens) => {
+        this.setState({
+          searchedList: itens.results,
+        });
+      });
+  }
+
+  onClickSearchButton = async () => {
+    this.setState((prevState) => ({
+      searchedList: prevState.searchedList,
+    }), async () => {
+      await this.updateSearchedList();
+    });
+  }
+
+  onClickCategory = ({ target }) => {
+    this.setState((prevState) => ({
+      categoryId: target.id,
+      searchedList: prevState.searchedList,
+    }), async () => {
+      await this.updateSearchedList();
+    });
+  }
+
   render() {
-    const { categories } = this.state;
+    const { categories, query, searchedList } = this.state;
     return (
       <div>
         <label htmlFor="search">
           <input
             id="search"
             type="text"
+            data-testid="query-input"
+            onChange={ this.onInputChange }
+            value={ query }
           />
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.onClickSearchButton }
+          >
+            Pesquisar
+          </button>
         </label>
-        <p
-          data-testid="home-initial-message"
-        >
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
+        { query.length === 0
+          && (
+            <p
+              data-testid="home-initial-message"
+            >
+              Digite algum termo de pesquisa ou escolha uma categoria.
+            </p>)}
         <Link
           to="/shoppingCart"
           data-testid="shopping-cart-button"
@@ -59,18 +110,33 @@ class Home extends Component {
             alt="Imagem do carrinho de compras"
           />
         </Link>
-        <section>
+        <aside>
           <p>Categorias</p>
           <ul>
             {categories.map((category) => (
               <li key={ category.id }>
                 <Categories
                   category={ category }
+                  handleClick={ this.onClickCategory }
                 />
               </li>
             ))}
           </ul>
-        </section>
+        </aside>
+        { query.length !== 0
+          && searchedList.length === 0
+          ? <p>Nenhum produto foi encontrado</p>
+          : (
+            searchedList.map((item) => (
+              <ItemCard
+                key={ item.id }
+                name={ item.title }
+                image={ item.thumbnail }
+                price={ item.price }
+                data-testid="product"
+              />
+            ))
+          )}
       </div>
     );
   }
