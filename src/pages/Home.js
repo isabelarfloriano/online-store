@@ -43,18 +43,18 @@ class Home extends Component {
   }
 
   onClickSearchButton = async () => {
-    this.setState({
-      searchedList: [],
-    }, async () => {
+    this.setState((prevState) => ({
+      searchedList: prevState.searchedList,
+    }), async () => {
       await this.updateSearchedList();
     });
   }
 
   onClickCategory = ({ target }) => {
-    this.setState({
+    this.setState((prevState) => ({
       categoryId: target.id,
-      searchedList: [],
-    }, async () => {
+      searchedList: prevState.searchedList,
+    }), async () => {
       await this.updateSearchedList();
     });
   }
@@ -129,7 +129,7 @@ class Home extends Component {
           : (
             searchedList.map((item) => (
               <ItemCard
-                key={ item.title }
+                key={ item.id }
                 name={ item.title }
                 image={ item.thumbnail }
                 price={ item.price }
