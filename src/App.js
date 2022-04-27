@@ -4,34 +4,45 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import ProductsDetails from './pages/ProductsDetails';
-// import * as api from './services/api';
 
 class App extends Component {
-  /* constructor() {
+  constructor() {
     super();
     this.state = {
-      categoryId: '',
-      query: 'geladeira',
+      cartProductsIds: [],
     };
   }
 
-  testeAPI = () => {
-    this.setState({
-      query: 'geladeira',
-    });
-  } */
+  handleClick = ({ target }) => {
+    this.setState((prevState) => ({
+      cartProductsIds: [...prevState.cartProductsIds, target.id],
+    }));
+    console.log(target.id);
+  }
 
   render() {
-    /* const { categoryId, query } = this.state;
-    api.getProductsFromCategoryAndQuery(categoryId, query)
-      .then((categories) => { console.log(categories); }); */
+    const { cartProductsIds } = this.state;
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={ Home } />
-          <Route exact path="/shoppingCart" component={ ShoppingCart } />
           <Route
             exact
+            path="/"
+            render={ (props) => (<Home
+              { ...props }
+              cartProductsIds={ cartProductsIds }
+              handleClick={ this.handleClick }
+            />) }
+          />
+          <Route
+            exact
+            path="/shoppingCart"
+            render={ (props) => (<ShoppingCart
+              { ...props }
+              cartProductsIds={ cartProductsIds }
+            />) }
+          />
+          <Route
             path="/productsDetails/:id"
             render={ (props) => <ProductsDetails { ...props } /> }
           />

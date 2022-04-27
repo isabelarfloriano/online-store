@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import * as api from '../services/api';
 import Categories from '../components/Categories';
 import ItemCard from '../components/ItemCard';
@@ -61,6 +62,7 @@ class Home extends Component {
 
   render() {
     const { categories, query, searchedList } = this.state;
+    const { handleClick } = this.props;
     return (
       <div>
         <label htmlFor="search">
@@ -135,6 +137,7 @@ class Home extends Component {
                 image={ item.thumbnail }
                 price={ item.price }
                 data-testid="product"
+                handleClick={ handleClick }
               />
             ))
           )}
@@ -142,5 +145,9 @@ class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+};
 
 export default Home;
