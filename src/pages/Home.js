@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getCategories } from '../services/api';
 import Categories from '../components/Categories';
-import { Link } from 'react-router-dom';
-
 
 class Home extends Component {
   constructor() {
@@ -25,7 +24,6 @@ class Home extends Component {
     const { categories } = this.state;
     return (
       <div>
-
         <label htmlFor="search">
           <input
             id="search"
@@ -37,17 +35,6 @@ class Home extends Component {
         >
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
-        <section>
-          <p>Categorias</p>
-          <ul>
-            {categories.map((category) => (
-              <li key={ category.id }>
-                <Categories
-                  category={ category }
-                />
-              </li>
-            ))}
-          </ul>
         <Link
           to="/shoppingCart"
           data-testid="shopping-cart-button"
@@ -72,8 +59,17 @@ class Home extends Component {
             alt="Imagem do carrinho de compras"
           />
         </Link>
-      </div>
-
+        <section>
+          <p>Categorias</p>
+          <ul>
+            {categories.map((category) => (
+              <li key={ category.id }>
+                <Categories
+                  category={ category }
+                />
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     );
