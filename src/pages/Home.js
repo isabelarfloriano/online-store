@@ -130,6 +130,7 @@ class Home extends Component {
             searchedList.map((item) => (
               <ItemCard
                 key={ item.id }
+                id={ item.id }
                 name={ item.title }
                 image={ item.thumbnail }
                 price={ item.price }
