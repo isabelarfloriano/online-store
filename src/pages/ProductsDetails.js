@@ -18,7 +18,6 @@ class ProductsDetails extends Component {
     const pegarApi = await api.getDetailsProducts(id);
     const { price, thumbnail, title, attributes } = pegarApi;
     this.setState({ price, image: thumbnail, name: title, details: [...attributes] });
-    console.log(attributes);
   }
 
   render() {
