@@ -18,6 +18,7 @@ class ItemCard extends Component {
         <button
           data-testid="product-add-to-cart"
           id={ id }
+          value={ `${name}___${price}___${image}` }
           type="button"
           onClick={ handleClick }
         >
