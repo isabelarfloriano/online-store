@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as api from '../services/api';
+// import * as api from '../services/api';
+import CartItem from '../components/CartItem';
 
 class ShoppingCart extends Component {
   constructor() {
@@ -10,13 +12,41 @@ class ShoppingCart extends Component {
     };
   }
 
-  async componentDidMount() {
-    const { cartProductsIds } = this.props;
-    cartProductsIds.map(async (id) => {
-      const pegarApi = await api.getDetailsProducts(id);
+  componentDidMount() {
+    const { cartProducts } = this.props;
+    this.setState({
+      products: cartProducts,
+    });
+    /* const { cartProductsIds } = this.props;
+    const uniqueIDs = [...new Set(cartProductsIds)];
+    uniqueIDs.map(async (id) => {
+      const apiResult = await api.getDetailsProducts(id);
+      console.log(apiResult.title);
       this.setState((prevState) => ({
-        products: [...prevState.products, pegarApi],
+        products: [...prevState.products, apiResult],
       }));
+    }); */
+    /*  console.log(cartProductsIds);
+    const idOne = cartProductsIds[0];
+    const idTwo = cartProductsIds[1];
+    const apiResult1 = api.getDetailsProducts(idOne)
+      .then((product) => {
+        console.log(product.title);
+      });
+    const apiResult2 = api.getDetailsProducts(idTwo)
+      .then((product) => {
+        console.log(product.title);
+      });
+    this.setState({
+      products: [apiResult1, apiResult2],
+    }); */
+  }
+
+  deleteProduct = ({ target }) => {
+    const { products } = this.state;
+    const productsFiltered = products.filter((product) => product.id !== target.id);
+    this.setState({
+      products: productsFiltered,
     });
   }
 
@@ -24,6 +54,9 @@ class ShoppingCart extends Component {
     const { products } = this.state;
     return (
       <div>
+        <Link to="/">
+          <p>Voltar</p>
+        </Link>
         {
           products.length === 0 ? (
             <h2
@@ -33,29 +66,26 @@ class ShoppingCart extends Component {
             </h2>
           ) : (
             products.map((product) => (
-              <div key={ product.id }>
-                <p data-testid="shopping-cart-product-name">{product.title}</p>
-                <p>{product.price}</p>
-                <img src={ product.thumbnail } alt={ product.title } />
-                <p
-                  data-testid="shopping-cart-product-quantity"
-                >
-                  1
-                </p>
-              </div>
+              <CartItem
+                key={ product.id }
+                id={ product.id }
+                name={ product.title }
+                price={ product.price }
+                image={ product.thumbnail }
+                deleteProduct={ this.deleteProduct }
+              />
             ))
           )
         }
       </div>
-
     );
   }
 }
 
 ShoppingCart.propTypes = {
-  cartProductsIds: PropTypes.arrayOf(
-    PropTypes.string.isRequired,
-  ).isRequired,
+  cartProducts: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
 };
 
 export default ShoppingCart;

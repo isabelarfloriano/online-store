@@ -67,6 +67,7 @@ class ProductsDetails extends Component {
         <button
           data-testid="product-detail-add-to-cart"
           id={ id }
+          value={ `${name}___${price}___${image}` }
           type="button"
           onClick={ handleClick }
         >

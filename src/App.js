@@ -10,18 +10,27 @@ class App extends Component {
     super();
     this.state = {
       cartProductsIds: [],
+      cartProducts: [],
     };
   }
 
   handleClick = ({ target }) => {
+    const { value } = target;
+    const targetValuesArr = value.split('___');
+    const product = {
+      id: target.id,
+      title: targetValuesArr[0],
+      price: Number(targetValuesArr[1]),
+      thumbnail: targetValuesArr[2],
+    };
     this.setState((prevState) => ({
       cartProductsIds: [...prevState.cartProductsIds, target.id],
+      cartProducts: [...prevState.cartProducts, product],
     }));
-    console.log(target.id);
   }
 
   render() {
-    const { cartProductsIds } = this.state;
+    const { cartProductsIds, cartProducts } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -39,6 +48,7 @@ class App extends Component {
             render={ (props) => (<ShoppingCart
               { ...props }
               cartProductsIds={ cartProductsIds }
+              cartProducts={ cartProducts }
             />) }
           />
           <Route
