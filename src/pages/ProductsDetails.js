@@ -66,7 +66,7 @@ class ProductsDetails extends Component {
       email,
       description,
       savedEval } = this.state;
-    const { handleClick, match: { params: { id } } } = this.props;
+    const { handleClick, cartProducts, match: { params: { id } } } = this.props;
     return (
       <div>
         <Link
@@ -92,6 +92,7 @@ class ProductsDetails extends Component {
             mWDvnVHkz7B85TadzTpz337qWVnIwmkJkgsuwfmP7o+1cJrCT8WAAAAAElFTkSuQmCC"
             alt="Imagem do carrinho de compras"
           />
+          <p data-testid="shopping-cart-size">{cartProducts.length}</p>
         </Link>
         <div>
           <h1 data-testid="product-detail-name">{name}</h1>
@@ -181,6 +182,9 @@ ProductsDetails.propTypes = {
     PropTypes.object,
   ]).isRequired,
   handleClick: PropTypes.func.isRequired,
+  cartProducts: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
 };
 
 export default ProductsDetails;
