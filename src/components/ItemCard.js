@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom';
 
 class ItemCard extends Component {
   render() {
-    const { name, image, price, id, avaibleQuant, handleClick } = this.props;
+    const {
+      name,
+      image,
+      price,
+      id,
+      avaibleQuant,
+      freeShipping,
+      handleClick } = this.props;
     return (
       <div data-testid="product">
         <Link
@@ -14,6 +21,7 @@ class ItemCard extends Component {
           <div>{name}</div>
           <img src={ image } alt={ name } />
           <div>{price}</div>
+          { freeShipping && <p data-testid="free-shipping">Frete Grátis</p>}
         </Link>
         <button
           data-testid="product-add-to-cart"
@@ -35,6 +43,7 @@ ItemCard.propTypes = {
   price: PropTypes.number.isRequired,
   avaibleQuant: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  freeShipping: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 

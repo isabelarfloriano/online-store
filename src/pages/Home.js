@@ -138,6 +138,7 @@ class Home extends Component {
                 image={ item.thumbnail }
                 price={ item.price }
                 avaibleQuant={ item.available_quantity }
+                freeShipping={ item.shipping.free_shipping }
                 data-testid="product"
                 handleClick={ handleClick }
               />

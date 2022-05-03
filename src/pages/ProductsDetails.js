@@ -16,6 +16,7 @@ class ProductsDetails extends Component {
       details: [],
       image: '',
       price: '',
+      freeShipping: false,
       rating: [RATE_ONE, RATE_TWO, RATE_THREE, RATE_FOUR, RATE_FIVE],
       rate: 0,
       email: '',
@@ -27,8 +28,13 @@ class ProductsDetails extends Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const pegarApi = await api.getDetailsProducts(id);
-    const { price, thumbnail, title, attributes } = pegarApi;
-    this.setState({ price, image: thumbnail, name: title, details: [...attributes] });
+    const { price, thumbnail, title, attributes, shipping } = pegarApi;
+    this.setState({
+      price,
+      image: thumbnail,
+      name: title,
+      details: [...attributes],
+      freeShipping: shipping.free_shipping });
   }
 
   onClickRating = ({ target }) => {
@@ -61,6 +67,7 @@ class ProductsDetails extends Component {
       image,
       name,
       details,
+      freeShipping,
       rating,
       rate,
       email,
@@ -97,6 +104,7 @@ class ProductsDetails extends Component {
         <div>
           <h1 data-testid="product-detail-name">{name}</h1>
           <h3>{price}</h3>
+          { freeShipping && <p data-testid="free-shipping">Frete Grátis</p>}
           <img
             src={ image }
             alt="imagem do produto"
