@@ -17,29 +17,6 @@ class ShoppingCart extends Component {
     this.setState({
       products: cartProducts,
     });
-    /* const { cartProductsIds } = this.props;
-    const uniqueIDs = [...new Set(cartProductsIds)];
-    uniqueIDs.map(async (id) => {
-      const apiResult = await api.getDetailsProducts(id);
-      console.log(apiResult.title);
-      this.setState((prevState) => ({
-        products: [...prevState.products, apiResult],
-      }));
-    }); */
-    /*  console.log(cartProductsIds);
-    const idOne = cartProductsIds[0];
-    const idTwo = cartProductsIds[1];
-    const apiResult1 = api.getDetailsProducts(idOne)
-      .then((product) => {
-        console.log(product.title);
-      });
-    const apiResult2 = api.getDetailsProducts(idTwo)
-      .then((product) => {
-        console.log(product.title);
-      });
-    this.setState({
-      products: [apiResult1, apiResult2],
-    }); */
   }
 
   deleteProduct = ({ target }) => {

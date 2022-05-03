@@ -14,7 +14,8 @@ class App extends Component {
     };
   }
 
-  handleClick = ({ target }) => {
+  handleClick = async (event) => {
+    const { target } = event;
     const { value } = target;
     const targetValuesArr = value.split('___');
     const product = {
@@ -23,6 +24,7 @@ class App extends Component {
       price: Number(targetValuesArr[1]),
       thumbnail: targetValuesArr[2],
     };
+
     this.setState((prevState) => ({
       cartProductsIds: [...prevState.cartProductsIds, target.id],
       cartProducts: [...prevState.cartProducts, product],
