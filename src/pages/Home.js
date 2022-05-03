@@ -137,6 +137,7 @@ class Home extends Component {
                 name={ item.title }
                 image={ item.thumbnail }
                 price={ item.price }
+                avaibleQuant={ item.available_quantity }
                 data-testid="product"
                 handleClick={ handleClick }
               />

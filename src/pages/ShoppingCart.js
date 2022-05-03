@@ -48,6 +48,7 @@ class ShoppingCart extends Component {
                 name={ product.title }
                 price={ product.price }
                 image={ product.thumbnail }
+                availability={ product.availability }
                 deleteProduct={ this.deleteProduct }
               />
             ))

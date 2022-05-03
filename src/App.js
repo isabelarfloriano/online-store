@@ -19,11 +19,13 @@ class App extends Component {
     const { target } = event;
     const { value } = target;
     const targetValuesArr = value.split('___');
+    console.log(targetValuesArr);
     const product = {
       id: target.id,
       title: targetValuesArr[0],
       price: Number(targetValuesArr[1]),
       thumbnail: targetValuesArr[2],
+      availability: Number(targetValuesArr[3]),
     };
 
     this.setState((prevState) => {
