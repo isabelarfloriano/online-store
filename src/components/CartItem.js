@@ -6,13 +6,21 @@ class CartItem extends Component {
     super();
     this.state = {
       quantity: 1,
+      disabled: false,
     };
   }
 
-  sumProductQuantity = () => {
-    this.setState((prevState) => ({
-      quantity: prevState.quantity + 1,
-    }));
+  sumProductQuantity = async () => {
+    const { availability } = this.props;
+    this.setState((prevState) => {
+      if (availability <= prevState.quantity) {
+        return {
+          disabled: true,
+        };
+      } return {
+        quantity: prevState.quantity + 1,
+      };
+    });
   }
 
   subProductQuantity = () => {
@@ -27,7 +35,7 @@ class CartItem extends Component {
 
   render() {
     const { id, name, price, image, deleteProduct } = this.props;
-    const { quantity } = this.state;
+    const { quantity, disabled } = this.state;
     return (
       <div>
         <button
@@ -54,6 +62,7 @@ class CartItem extends Component {
           type="button"
           id={ id }
           onClick={ this.sumProductQuantity }
+          disabled={ disabled }
         >
           +
         </button>
@@ -66,6 +75,7 @@ CartItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  availability: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   deleteProduct: PropTypes.func.isRequired,
 };

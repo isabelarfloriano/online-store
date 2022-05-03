@@ -62,7 +62,7 @@ class Home extends Component {
 
   render() {
     const { categories, query, searchedList } = this.state;
-    const { handleClick } = this.props;
+    const { handleClick, cartProducts } = this.props;
     return (
       <div>
         <label htmlFor="search">
@@ -111,6 +111,7 @@ class Home extends Component {
             mWDvnVHkz7B85TadzTpz337qWVnIwmkJkgsuwfmP7o+1cJrCT8WAAAAAElFTkSuQmCC"
             alt="Imagem do carrinho de compras"
           />
+          <p data-testid="shopping-cart-size">{cartProducts.length}</p>
         </Link>
         <aside>
           <p>Categorias</p>
@@ -136,6 +137,8 @@ class Home extends Component {
                 name={ item.title }
                 image={ item.thumbnail }
                 price={ item.price }
+                avaibleQuant={ item.available_quantity }
+                freeShipping={ item.shipping.free_shipping }
                 data-testid="product"
                 handleClick={ handleClick }
               />
@@ -148,6 +151,9 @@ class Home extends Component {
 
 Home.propTypes = {
   handleClick: PropTypes.func.isRequired,
+  cartProducts: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
 };
 
 export default Home;

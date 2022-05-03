@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import * as api from '../services/api';
 import CartItem from '../components/CartItem';
 
 class ShoppingCart extends Component {
@@ -17,29 +16,6 @@ class ShoppingCart extends Component {
     this.setState({
       products: cartProducts,
     });
-    /* const { cartProductsIds } = this.props;
-    const uniqueIDs = [...new Set(cartProductsIds)];
-    uniqueIDs.map(async (id) => {
-      const apiResult = await api.getDetailsProducts(id);
-      console.log(apiResult.title);
-      this.setState((prevState) => ({
-        products: [...prevState.products, apiResult],
-      }));
-    }); */
-    /*  console.log(cartProductsIds);
-    const idOne = cartProductsIds[0];
-    const idTwo = cartProductsIds[1];
-    const apiResult1 = api.getDetailsProducts(idOne)
-      .then((product) => {
-        console.log(product.title);
-      });
-    const apiResult2 = api.getDetailsProducts(idTwo)
-      .then((product) => {
-        console.log(product.title);
-      });
-    this.setState({
-      products: [apiResult1, apiResult2],
-    }); */
   }
 
   deleteProduct = ({ target }) => {
@@ -72,11 +48,20 @@ class ShoppingCart extends Component {
                 name={ product.title }
                 price={ product.price }
                 image={ product.thumbnail }
+                availability={ product.availability }
                 deleteProduct={ this.deleteProduct }
               />
             ))
           )
         }
+        <Link to="/checkout">
+          <button
+            data-testid="checkout-products"
+            type="button"
+          >
+            Finalizar Compra
+          </button>
+        </Link>
       </div>
     );
   }
